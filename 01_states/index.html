@@ -14,7 +14,7 @@
             // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration
             .then((reg) => {
                 // get service worker from registration
-                const sw = reg.installing;
+                const sw = reg.installing ?? reg.active;
                 console.log("MainThread: SW registration done, state: ", sw.state);
                 // setup handler to "statechange" event to trace changes
                 sw.addEventListener("statechange", (e) => {
@@ -37,6 +37,8 @@
 <h1>Service Workers: states</h1>
 
 <div> See console output.</div>
+
+<img style="max-width: 100%" src="pwa_sw_states.png">
 
 <script>
     console.log("MainThread: end of body.");
