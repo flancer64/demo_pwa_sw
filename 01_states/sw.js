@@ -1,4 +1,4 @@
 console.log(
-    "SW: registering itself, state: ",
+    "registering itself, state: ",
     self.serviceWorker.state
 );

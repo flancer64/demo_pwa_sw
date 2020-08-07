@@ -9,25 +9,25 @@
 
     <script>
 
-        console.log("MainThread: before SW registration.");
+        console.log("before SW registration.");
         navigator.serviceWorker.register("sw.js")
             // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration
             .then((reg) => {
                 // get service worker from registration
                 const sw = reg.installing ?? reg.active;
-                console.log("MainThread: SW registration done, state: ", sw.state);
+                console.log("SW registration done, state: ", sw.state);
                 // setup handler to "statechange" event to trace changes
                 sw.addEventListener("statechange", (e) => {
-                    console.log("MainThread: SW state is changed: ", e.target.state);
+                    console.log("SW state is changed: ", e.target.state);
                     if (e.target.state === "activated") {
-                        console.log("MainThread: uninstall service worker after activation.");
+                        console.log("uninstall service worker after activation.");
                         reg.unregister();
                     }
                 });
             }, (err) => {
-                console.log("MainThread: SW registration failed: ", err);
+                console.log("SW registration failed: ", err);
             });
-        console.log("MainThread: after SW registration.");
+        console.log("after SW registration.");
 
     </script>
 
@@ -41,7 +41,7 @@
 <img style="max-width: 100%" src="pwa_sw_states.png">
 
 <script>
-    console.log("MainThread: end of body.");
+    console.log("end of body.");
 </script>
 </body>
 </html>
