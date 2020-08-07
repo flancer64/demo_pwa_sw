@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="SW Demo">
+    <title>SW: states</title>
+    <link rel="manifest" href="pwa.webmanifest">
+
+    <script>
+
+        console.log("MainThread: before SW registration.");
+        navigator.serviceWorker.register("sw.js")
+            // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration
+            .then((reg) => {
+                // get service worker from registration
+                const sw = reg.installing;
+                console.log("MainThread: SW registration done, state: ", sw.state);
+                // setup handler to "statechange" event to trace changes
+                sw.addEventListener("statechange", (e) => {
+                    console.log("MainThread: SW state is changed: ", e.target.state);
+                    if (e.target.state === "activated") {
+                        console.log("MainThread: uninstall service worker after activation.");
+                        reg.unregister();
+                    }
+                });
+            }, (err) => {
+                console.log("MainThread: SW registration failed: ", err);
+            });
+        console.log("MainThread: after SW registration.");
+
+    </script>
+
+</head>
+<body>
+
+<h1>Service Workers: states</h1>
+
+<div> See console output.</div>
+
+<script>
+    console.log("MainThread: end of body.");
+</script>
+</body>
+</html>
