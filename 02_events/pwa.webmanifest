@@ -1,0 +1,7 @@
+{
+  "name": "Test PWA",
+  "short_name": "Test PWA",
+  "display": "minimal-ui",
+  "scope": ".",
+  "start_url": "index.html"
+}

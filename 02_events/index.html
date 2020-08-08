@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="SW Demo">
+    <title>SW: events</title>
+    <link rel="manifest" href="pwa.webmanifest">
+
+    <script>
+        // https://stackoverflow.com/a/53679119/4073821
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('sw.js')
+                    .then((reg) => {
+                        // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/onupdatefound
+                        reg.onupdatefound = (event) => {
+                            console.log("onUpdateFound.");
+                        };
+
+                        // get service worker from registration (new or activated)
+                        const sw = (reg.installing) ? reg.installing
+                            : (reg.waiting) ? reg.waiting
+                                : (reg.active);
+
+                        // trace state changes
+                        sw.addEventListener("statechange", (e) => {
+                            console.log("State is changed: ", e.target.state);
+                            if (e.target.state === "activated") {
+                                // location.reload();
+                            }
+                        });
+
+                    }).catch((e) => {
+                    console.log("SW registration failed: ", e);
+                });
+
+                // listen for messages from SW
+                navigator.serviceWorker.addEventListener('message', event => {
+                    console.log(event.data.msg, event.data.url);
+                });
+            });
+        }
+
+
+    </script>
+
+</head>
+<body>
+
+<h1>Service Workers: events</h1>
+
+<div> See console output.</div>
+
+</body>
+</html>
