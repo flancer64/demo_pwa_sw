@@ -23,8 +23,8 @@ self.addEventListener("install", (event) => {
                     .then((cache) => {
                         return cache.addAll(
                             [
-                                "./index.html",
-                                "./pwa.webmanifest"
+                                // "./index.html",
+                                // "./pwa.webmanifest"
                             ]
                         );
                     })
